@@ -4,6 +4,7 @@ import vertexai
 from vertexai.generative_models import GenerativeModel, Part
 from google.cloud import storage
 from dotenv import load_dotenv
+import logging
 
 
 @functions_framework.cloud_event
@@ -11,7 +12,7 @@ def process_audio(cloud_event):
     load_dotenv()
     project_id = os.environ.get("PROJECT_ID")
     region = os.environ.get("REGION", "us-central1")
-    output_file_name = "file.txt"
+    output_file_name = os.path.splitext(mp3_file)[0] + ".txt"
 
     if not project_id:
         print("Error: PROJECT_ID not defined")
@@ -24,7 +25,7 @@ def process_audio(cloud_event):
     mp3_file = str(cloud_event.data["name"])
 
     if not mp3_file.endswith(".mp3"):
-        print(f"File {mp3_file} is not an mp3 file. Skipping.")
+        logging.info(f"File {mp3_file} is not an mp3 file. Skipping.")
         return
 
     gcs_uri = f"gs://{input_bucket_name}/{mp3_file}"
@@ -40,7 +41,7 @@ def process_audio(cloud_event):
         )
         transcript = response.text
     except Exception as e:
-        print("Error: something wrong happened")
+        logging.error(f"Error during transcription: {e}")
         return
     storage_client = storage.Client()
     output_bucket = storage_client.bucket(output_bucket_name)
