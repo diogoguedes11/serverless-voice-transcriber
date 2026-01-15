@@ -21,3 +21,9 @@ resource "google_storage_bucket_object" "mp3" {
   content_type = "audio/mpeg"
 
 }
+
+resource "google_storage_bucket_object" "python_function" {
+  name   = "function.zip"
+  bucket = google_storage_bucket.input_bucket.name
+  source = "assets/function.zip"
+}

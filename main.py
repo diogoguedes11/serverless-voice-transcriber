@@ -43,8 +43,8 @@ def process_audio(cloud_event):
         print("Error: something wrong happened")
         return
     storage_client = storage.Client()
-    ouput_bucket = storage_client.bucket(output_bucket_name)
-    blob = ouput_bucket.blob(output_file_name)
+    output_bucket = storage_client.bucket(output_bucket_name)
+    blob = output_bucket.blob(output_file_name)
     blob.upload_from_string(transcript)
     print(
         f"Success! transcript is now at: gs://{output_bucket_name}/{output_file_name}"
