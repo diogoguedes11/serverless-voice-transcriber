@@ -4,6 +4,7 @@
 # Terraform state files
 *.tfstate
 *.tfstate.*
+__pycache__
 
 .env
 # Crash log files

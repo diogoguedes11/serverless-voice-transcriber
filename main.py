@@ -12,17 +12,15 @@ def process_audio(cloud_event):
     load_dotenv()
     project_id = os.environ.get("PROJECT_ID")
     region = os.environ.get("REGION", "us-central1")
+    mp3_file = str(cloud_event.data["name"])
     output_file_name = os.path.splitext(mp3_file)[0] + ".txt"
 
     if not project_id:
         print("Error: PROJECT_ID not defined")
         return
     vertexai.init(project=project_id, location=region)
-
     input_bucket_name = str(cloud_event.data["bucket"])
     output_bucket_name = f"{project_id}-output-bucket"
-
-    mp3_file = str(cloud_event.data["name"])
 
     if not mp3_file.endswith(".mp3"):
         logging.info(f"File {mp3_file} is not an mp3 file. Skipping.")

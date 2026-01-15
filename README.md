@@ -15,16 +15,16 @@ This project provides a serverless solution for transcribing audio files (MP3) u
 ┌────────────┐        ┌────────────────────┐        ┌──────────────┐
 │  User/API  │  ──▶  │  GCS Input Bucket  │  ──▶   │ Cloud Function│
 └────────────┘        └────────────────────┘        └──────┬───────┘
-																			  │
-																			  ▼
-																┌────────────────────┐
-																│ Vertex AI (STT)    │
-																└─────────┬──────────┘
-																			 │
-																			 ▼
-																┌────────────────────┐
-																│ GCS Output Bucket  │
-																└────────────────────┘
+                                                           │
+                                                           ▼
+                                            ┌────────────────────┐
+                                            │ Vertex AI (STT)    │
+                                            └─────────┬──────────┘
+                                                      │
+                                                      ▼
+                                            ┌────────────────────┐
+                                            │ GCS Output Bucket  │
+                                            └────────────────────┘
 ```
 
 ## Getting Started
